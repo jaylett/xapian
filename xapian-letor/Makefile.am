@@ -74,6 +74,7 @@ noinst_HEADERS +=\
 	ranker.h\
 	evalmetric.h\
 	svm_ranker.h\
+	listnet_ranker.h\
 	scorer.h
 
 lib_src +=\
@@ -86,6 +87,7 @@ lib_src +=\
 	ranker.cc\
 	evalmetric.cc\
 	svm_ranker.cc\
+	listnet_ranker.cc\
 	scorer.cc
 
 
