@@ -21,16 +21,14 @@
 #ifndef SVMRANKER_H
 #define SVMRANKER_H
 
-
 #include <xapian.h>
-#include <xapian/intrusive_ptr.h>           //#include <xapian/base.h>
+#include <xapian/intrusive_ptr.h>
 #include <xapian/types.h>
 #include <xapian/visibility.h>
 
 #include "ranker.h"
 #include "ranklist.h"
 #include "featurevector.h"
-//#include "evalmetric.h"
 
 #include <list>
 #include <map>
@@ -43,24 +41,18 @@ namespace Xapian {
 class XAPIAN_VISIBILITY_DEFAULT SVMRanker: public Ranker {
 
     struct svm_model *model;
-    //string model;
-    //double weight[];
+
   public:
     SVMRanker();
 
-    /* Override all the four methods below in the ranker sub-classes files
-     * wiz svmranker.cc , listnet.cc, listmle.cc and so on
-     */
-    Xapian::RankList rank(Xapian::RankList & rl);
-
-    void learn_model();
-
-    void load_model(const std::string & model_file);
+    void train_model();
 
     void save_model();
 
-    double score(const Xapian::FeatureVector & fv);
+    void load_model(const std::string & model_file);
 
+    Xapian::RankList rank(Xapian::RankList & rl);
+    
 };
 
 }
