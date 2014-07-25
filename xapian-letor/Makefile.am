@@ -76,6 +76,7 @@ noinst_HEADERS +=\
 	svm_ranker.h\
 	listnet_ranker.h\
 	listmle_ranker.h\
+	adarank_ranker.h\
 	scorer.h\
 	map_scorer.h\
 	err_scorer.h\
@@ -93,6 +94,7 @@ lib_src +=\
 	svm_ranker.cc\
 	listnet_ranker.cc\
 	listmle_ranker.cc\
+	adarank_ranker.cc\
 	scorer.cc\
 	map_scorer.cc\
 	err_scorer.cc\
