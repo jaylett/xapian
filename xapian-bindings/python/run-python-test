@@ -3,5 +3,4 @@
 # versions we set a trap which will delete any generated .pyc files after
 # the test, or upon a signal.
 trap 'rm -f "${srcdir-.}/*.pyc"' 0 1 2 13 15
-PYTHONPATH=".:$PYTHONPATH" PYTHONDONTWRITEBYTECODE=1 ${PYTHON-python} "$@"
-exit $?
+DYLD_LIBRARY_PATH="$INTREE_DYLD_PATH" PYTHONPATH=".:$PYTHONPATH" PYTHONDONTWRITEBYTECODE=1 exec ${PYTHON-python} "$@"

@@ -76,12 +76,12 @@ xapian/__init__.py: xapian.py
 # We "import _xapian" first so that if we fail to import the glue library
 # we don't generate a broken .pyc or .pyo.
 xapian/__pycache__/__init__.@PYTHON3_CACHE_TAG@.pyc: xapian/__init__.py xapian/_xapian$(PYTHON3_SO)
-	PYTHONPATH="xapian:$$PYTHONPATH" $(PYTHON3) -c "import _xapian"
-	PYTHONPATH=".:$$PYTHONPATH" $(PYTHON3) -c "import xapian"
+	$(SET_DYLD_LIBRARY_PATH_IF_NEEDED) PYTHONPATH="xapian:$$PYTHONPATH" $(PYTHON3) -c "import _xapian"
+	$(SET_DYLD_LIBRARY_PATH_IF_NEEDED) PYTHONPATH=".:$$PYTHONPATH" $(PYTHON3) -c "import xapian"
 
 xapian/__pycache__/__init__.@PYTHON3_CACHE_OPT1_EXT@: xapian/__init__.py xapian/_xapian$(PYTHON3_SO)
-	PYTHONPATH="xapian:$$PYTHONPATH" $(PYTHON3) -O -c "import _xapian"
-	PYTHONPATH=".:$$PYTHONPATH" $(PYTHON3) -O -c "import xapian"
+	$(SET_DYLD_LIBRARY_PATH_IF_NEEDED) PYTHONPATH="xapian:$$PYTHONPATH" $(PYTHON3) -O -c "import _xapian"
+	$(SET_DYLD_LIBRARY_PATH_IF_NEEDED) PYTHONPATH=".:$$PYTHONPATH" $(PYTHON3) -O -c "import xapian"
 
 xapian/_xapian$(PYTHON3_SO): _xapian.la
 	$(MKDIR_P) xapian
@@ -159,4 +159,4 @@ install-data-local:
 all-local: $(sphinxdocs)
 
 $(sphinxdocs): xapian/__init__.py docs/conf.py $(RST_DOCS) $(dist_exampledata_DATA)
-	PYTHONPATH=..:$$PYTHONPATH $(PYTHON3) $(SPHINX_BUILD) -b html -d doctrees -c docs $(srcdir)/docs docs/html
+	$(SET_DYLD_LIBRARY_PATH_IF_NEEDED) PYTHONPATH=..:$$PYTHONPATH $(PYTHON3) $(SPHINX_BUILD) -b html -d doctrees -c docs $(srcdir)/docs docs/html

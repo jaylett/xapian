@@ -33,12 +33,14 @@ AM_TESTS_ENVIRONMENT = \
 	CPPFLAGS="$(CPPFLAGS)" ;\
 	CXX="$(CXX)" ;\
 	CXXFLAGS="$(CXXFLAGS)" ;\
+	PROVE="$(PROVE)" ;\
 	XAPIAN_CONFIG="$(XAPIAN_CONFIG)" ;\
 	export CPPFLAGS ;\
 	export CXX ;\
 	export CXXFLAGS ;\
+	export PROVE ;\
 	export XAPIAN_CONFIG ;
-LOG_COMPILER = $(PROVE)
+LOG_COMPILER = '$(srcdir)'/run-perl-test
 AM_LOG_FLAGS = -I. -I'$(srcdir)'
 
 installcheck-local:

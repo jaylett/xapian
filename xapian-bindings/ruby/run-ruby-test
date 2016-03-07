@@ -1,0 +1,4 @@
+#!/bin/sh
+
+DYLD_LIBRARY_PATH="$INTREE_DYLD_PATH" ${RUBY-ruby} "$@"
+exit $?

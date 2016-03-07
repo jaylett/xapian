@@ -11,7 +11,16 @@ endif
 if NEED_INTREE_DYLD
 # This is a hack for Mac OS X to enable tests to work when built against an
 # uninstalled xapian-core tree.  See https://trac.xapian.org/ticket/322
-export DYLD_LIBRARY_PATH=$(INTREE_DYLD_PATH)
+# From El Capitan onward, System Integrity Protection means that DYLD
+# variables are cleared on exec from a "protected process", so we cannot
+# just set and export it directly; instead we set it as late as possible,
+# on the actual make lines that need it. See for instance
+# xapian-bindings/python/Makefile.am.
+#
+# We export INTREE_DYLD_PATH (the actual path used) so it can be used
+# in scripts invoked by make without having to generate them via autoconf.
+export INTREE_DYLD_PATH
+export SET_DYLD_LIBRARY_PATH_IF_NEEDED=DYLD_LIBRARY_PATH="$(INTREE_DYLD_PATH)"
 endif
 
 if OVERRIDE_MACOSX_DEPLOYMENT_TARGET

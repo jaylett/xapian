@@ -4,7 +4,10 @@ include ../generic/generic.mk
 
 ## Test programs to be run
 TESTS = SmokeTest.exe
-LOG_COMPILER = $(RUN_CSHARP)
+AM_TESTS_ENVIRONMENT = \
+	RUN_CSHARP=$(RUN_CSHARP) ;\
+	export RUN_CSHARP ;
+LOG_COMPILER = '$(srcdir)'/run-csharp-test
 
 ASSEMBLY=XapianSharp
 

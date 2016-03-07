@@ -6,7 +6,7 @@ abs_builddir = @abs_builddir@
 
 ## Test programs to be run
 TESTS = smoketest.php
-LOG_COMPILER = $(PHP)
+LOG_COMPILER = '$(srcdir)'/run-php-test
 # Use -n to disable use of the system php.ini (which might prevent php from
 # using dl() which would make our test fail).  It would be nicer to use "-c"
 # and provide an alternative php.ini but with "-c" it seems PHP still loads the
