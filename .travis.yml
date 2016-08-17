@@ -34,7 +34,7 @@ addons:
       - libsvm-dev
 
 matrix:
-  only:
+  include:
     - compiler: gcc
       # GCC we want v4.9.
       addons:
