@@ -17,9 +17,9 @@ matrix:
     - compiler: gcc
       # GCC we want v4.9.
       addons:
-        sources:
-          - ubuntu-toolchain-r-test
         apt:
+          sources:
+            - ubuntu-toolchain-r-test
           packages:
             - doxygen
             - graphviz
@@ -41,9 +41,9 @@ matrix:
       # llvm c++ library, not the GCC one. (Otherwise, depending on
       # the GCC version, there can be issues.)
       addons:
-        sources:
-          - ubuntu-toolchain-r-test
         apt:
+          sources:
+            - ubuntu-toolchain-r-test
           packages:
             - doxygen
             - graphviz
