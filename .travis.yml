@@ -6,14 +6,12 @@
 # travis provides as Ubuntu 12.04 LTS so we have to
 # upgrade a lot of stuff to get something vaguely
 # modern.
-
-os: linux
 sudo: false
 language: cpp
 env:
-  # Tell bootstrap where to clone ./common from
-  - XAPIAN_COMMON_CLONE_URL=https://github.com/xapian/xapian.git
-
+  global:
+    # Tell bootstrap where to clone ./common from
+    - XAPIAN_COMMON_CLONE_URL=https://github.com/xapian/xapian.git
 # Get all of our build dependencies, no matter what
 # part of the build matrix we're in.
 addons:
