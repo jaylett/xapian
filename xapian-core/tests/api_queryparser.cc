@@ -1725,6 +1725,56 @@ DEFINE_TESTCASE(qp_range4, !backend) {
     return true;
 }
 
+static const test test_value_filesizerange_queries[] = {
+    { "10K..20K", "VALUE_RANGE 1 10240 20480" },
+    { "10..50M", "VALUE_RANGE 1 10485760 52428800" },
+    { "..50M", "VALUE_RANGE 1 10485760 52428800" },
+    { "10M..", "VALUE_RANGE 1 10485760 52428800" },
+    { "1.5..2.7M", "VALUE_RANGE 1 10485760 52428800" },
+    { "10K..20", "Unknown range operation" },
+    { "10A..20A", "Unknown range operation" },
+    { "10..20H", "Unknown range operation" },
+    { "10..20", "VALUE_RANGE 1 10 20" },
+    { "size:10..20K", "0 * VALUE_RANGE 1 10240 20480" },
+    { "size:10..50M", "0 * VALUE_RANGE 1 10485760 52428800" },
+    { "filesize:10B..1M", "0 * VALUE_RANGE 2 10 1048576" },
+    { "file-size:10A..20M", "Unknown range operation" },
+    { "size:10K..100", "Unknown range operation" },
+    { NULL, NULL }
+};
+
+// Feature test FileSizeRangeProcessor with prefixes
+DEFINE_TESTCASE(qp_filesizerange, !backend) {
+    Xapian::QueryParser qp;
+    Xapian::FileSizeRangeProcessor rp_filesize_1(1, "size:");
+    Xapian::FileSizeRangeProcessor rp_filesize_2(2, "filesize:");
+    Xapian::FileSizeRangeProcessor rp_filesize_3(3, "file-size:");
+    qp.add_rangeprocessor(&rp_filesize_1);
+    qp.add_rangeprocessor(&rp_filesize_2);
+    qp.add_rangeprocessor(&rp_filesize_3);
+    for (const test *p = test_value_filesizerange_queries; p->query; ++p) {
+	string expect, parsed;
+	if (p->expect)
+	    expect = p->expect;
+	else
+	    expect = "parse error";
+	try {
+	    Xapian::Query qobj = qp.parse_query(p->query);
+	    parsed = qobj.get_description();
+	    expect = string("Query(") + expect + ')';
+	} catch (const Xapian::QueryParserError &e) {
+	    parsed = e.get_msg();
+	} catch (const Xapian::Error &e) {
+	    parsed = e.get_description();
+	} catch (...) {
+	    parsed = "Unknown exception!";
+	}
+	tout << "Query: " << p->query << '\n';
+	TEST_STRINGS_EQUAL(parsed, expect);
+    }
+    return true;
+}
+
 static const test test_value_daterange1_queries[] = {
     { "12/03/99..12/04/01", "VALUE_RANGE 1 19991203 20011204" },
     { "03-12-99..04-14-01", "VALUE_RANGE 1 19990312 20010414" },
